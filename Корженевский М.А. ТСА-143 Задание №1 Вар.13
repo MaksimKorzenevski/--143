@@ -1,0 +1,25 @@
+int main() {
+
+double x = 1.4;
+double y = 3.1;
+double z = 0.5;
+
+double part1 = z * x * sin(2 * x);
+double part2 = exp(-2 * x) * (x + y);
+double a = sqrt(part1 + part2);
+
+double part3 = exp(2 * x) * log(z + x);
+double part4 = pow(y, 3) * x * log(y - x);
+double b = part3 - part4;
+
+std::cout « std::fixed « std::setprecision(4);
+std::cout « "Исходные данные:" « std::endl;
+std::cout « "x = " « x « std::endl;
+std::cout « "y = " « y « std::endl;
+std::cout « "z = " « z « std::endl;
+
+std::cout « "\nРезультаты вычислений:" « std::endl;
+std::cout « "a = " « a « std::endl;
+std::cout « "b = " « b « std::endl;
+return 0;
+}
