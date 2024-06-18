@@ -1,0 +1,32 @@
+bool isValidInput(double& value) {
+if (std::cin.fail() || value <= 0) {
+std::cin.clear(); 
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+return false;
+}
+return true;
+}
+
+int main() {
+double C;
+
+while (true) {
+std::cout « "Введите длину окружности: ";
+std::cin » C;
+if (isValidInput(C)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число.\n";
+}
+}
+
+double R = C / (2 * M_PI);
+
+double S = M_PI * R * R;
+
+std::cout « "Длина окружности: " « C « std::endl;
+std::cout « "Радиус окружности: " « R « std::endl;
+std::cout « "Площадь круга: " « S « std::endl;
+
+return 0;
+}
