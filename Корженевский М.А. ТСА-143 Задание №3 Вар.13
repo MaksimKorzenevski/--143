@@ -1,0 +1,74 @@
+bool isValidInput(double& value) {
+if (std::cin.fail() || value <= 0) {
+std::cin.clear(); // очищаем флаг ошибки
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+return false;
+}
+return true;
+}
+
+bool fitsInCircle(double width, double height, double radius) {
+// Проверяем, помещается ли прямоугольник в круге с центром в начале координат
+double diagonal = std::sqrt(width * width + height * height);
+return diagonal <= 2 * radius;
+}
+
+int main() {
+double r, a, b, c, d;
+
+while (true) {
+std::cout « "Введите радиус круга: ";
+std::cin » r;
+if (isValidInput(r)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число.\n";
+}
+}
+
+while (true) {
+std::cout « "Введите размеры первой пластинки (a и b): ";
+std::cin » a » b;
+if (isValidInput(a) && isValidInput(b)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительные числа.\n";
+}
+}
+
+while (true) {
+std::cout « "Введите размеры второй пластинки (c и d): ";
+std::cin » c » d;
+if (isValidInput(c) && isValidInput(d)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительные числа.\n";
+}
+}
+
+bool fitsFirst = fitsInCircle(a, b, r);
+bool fitsSecond = fitsInCircle(c, d, r);
+
+std::cout « "\nРезультаты проверки:\n";
+
+if (fitsFirst && fitsSecond) {
+// Вычислим необходимую площадь
+double areaRequired = (a * b) + (c * d);
+double circleArea = M_PI * r * r;
+
+if (areaRequired <= circleArea) {
+std::cout « "Обе пластинки помещаются в круг и не пересекаются.\n";
+} else {
+std::cout « "Площадь пластинок превышает площадь круга, они не помещаются вместе.\n";
+}
+} else {
+if (!fitsFirst) {
+std::cout « "Первая пластинка не помещается в круг.\n";
+}
+if (!fitsSecond) {
+std::cout « "Вторая пластинка не помещается в круг.\n";
+}
+}
+
+return 0;
+}
