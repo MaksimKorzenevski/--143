@@ -1,0 +1,75 @@
+bool isValidInput(double& value) {
+if (std::cin.fail() || value <= 0) {
+std::cin.clear();
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+return false;
+}
+return true;
+}
+
+double factorial(int k) {
+double result = 1.0;
+for (int i = 1; i <= k; ++i) {
+result *= i;
+}
+return result;
+}
+
+double sumFirstN(int n) {
+double sum = 0.0;
+for (int k = 0; k <= n; ++k) {
+double term = pow(-1, k) / (factorial(k) * factorial(k + 1));
+sum += term;
+}
+return sum;
+}
+
+double sumTermsGreaterOrEqualE(double e) {
+double sum = 0.0;
+int k = 0;
+while (true) {
+double term = pow(-1, k) / (factorial(k) * factorial(k + 1));
+if (fabs(term) < e) {
+break;
+}
+sum += term;
+++k;
+}
+return sum;
+}
+
+int main() {
+int n;
+double e;
+
+while (true) {
+std::cout « "Введите количество первых членов последовательности n: ";
+std::cin » n;
+if (!std::cin.fail() && n >= 0) {
+break;
+} else {
+std::cin.clear();
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+std::cout « "Ошибка ввода! Пожалуйста, введите неотрицательное целое число.\n";
+}
+}
+
+while (true) {
+std::cout « "Введите значение e: ";
+std::cin » e;
+if (isValidInput(e)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число.\n";
+}
+}
+
+double sum_n = sumFirstN(n);
+std::cout « std::fixed « std::setprecision(10);
+std::cout « "Сумма первых " « n « " членов последовательности: " « sum_n « "\n";
+
+double sum_e = sumTermsGreaterOrEqualE(e);
+std::cout « "Сумма членов последовательности, по модулю не меньших " « e « ": " « sum_e « "\n";
+
+return 0;
+}
