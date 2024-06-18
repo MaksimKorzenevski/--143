@@ -1,0 +1,58 @@
+bool isValidInput(double& value) {
+if (std::cin.fail() || value <= 0) {
+std::cin.clear();
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+return false;
+}
+return true;
+}
+
+double calculateFunction(double x) {
+return 3 * x - 14 + exp(x) - exp(-x);
+}
+
+int main() {
+double x_start, x_end, step;
+
+while (true) {
+std::cout « "Введите начальное значение интервала (например, 1): ";
+std::cin » x_start;
+if (isValidInput(x_start)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число.\n";
+}
+}
+
+while (true) {
+std::cout « "Введите конечное значение интервала (например, 3): ";
+std::cin » x_end;
+if (isValidInput(x_end) && x_end > x_start) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число, большее начального значения.\n";
+}
+}
+
+while (true) {
+std::cout « "Введите шаг (например, 0.2): ";
+std::cin » step;
+if (isValidInput(step) && step > 0 && step < (x_end - x_start)) {
+break;
+} else {
+std::cout « "Ошибка ввода! Пожалуйста, введите положительное число, меньшее длины интервала.\n";
+}
+}
+
+std::cout « std::fixed « std::setprecision(4);
+std::cout « "\nТабулирование функции y = 3x - 14 + e^x - e^-x\n";
+std::cout « "x\t\t\ty\n";
+std::cout « "-------------------------\n";
+
+for (double x = x_start; x <= x_end; x += step) {
+double y = calculateFunction(x);
+std::cout « x « "\t\t" « y « "\n";
+}
+
+return 0;
+}
