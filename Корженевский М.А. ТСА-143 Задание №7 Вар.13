@@ -1,0 +1,117 @@
+bool isValidInput(int& value) {
+if (std::cin.fail() || value <= 0) {
+std::cin.clear();
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+return false;
+}
+return true;
+}
+
+void fillArrayFromKeyboard(std::vector<std::vector<int»& arr, int n, int m) {
+std::cout « "Введите " « n « " строк по " « m « " целых чисел:\n";
+for (int i = 0; i < n; ++i) {
+for (int j = 0; j < m; ++j) {
+std::cin » arr[i][j];
+}
+}
+}
+
+void fillArrayRandomly(std::vector<std::vector<int»& arr, int n, int m, int min = -10, int max = 10) {
+std::srand(std::time(0));
+for (int i = 0; i < n; ++i) {
+for (int j = 0; j < m; ++j) {
+arr[i][j] = min + std::rand() % (max - min + 1);
+}
+}
+}
+
+void printArray(const std::vector<std::vector<int»& arr) {
+for (const auto& row : arr) {
+for (int num : row) {
+std::cout « num « " ";
+}
+std::cout « "\n";
+}
+}
+
+void replaceEvenElementsWithMaxAbs(std::vector<std::vector<int»& arr) {
+int n = arr.size();
+int m = arr[0].size();
+for (int j = 0; j < m; ++j) {
+int maxAbs = 0;
+for (int i = 0; i < n; ++i) {
+if (std::abs(arr[i][j]) > std::abs(maxAbs)) {
+maxAbs = arr[i][j];
+}
+}
+for (int i = 0; i < n; ++i) {
+if (arr[i][j] % 2 == 0) {
+arr[i][j] = maxAbs;
+}
+}
+}
+}
+
+void deleteColumnsWithEvenFirstElement(std::vector<std::vector<int»& arr) {
+int n = arr.size();
+int m = arr[0].size();
+std::vector<bool> columnsToDelete(m, false);
+
+for (int j = 0; j < m; ++j) {
+if (arr[0][j] % 2 == 0) {
+columnsToDelete[j] = true;
+}
+}
+
+std::vector<std::vector<int» newArr(n);
+for (int i = 0; i < n; ++i) {
+for (int j = 0; j < m; ++j) {
+if (!columnsToDelete[j]) {
+newArr[i].push_back(arr[i][j]);
+}
+}
+}
+arr = newArr;
+}
+
+int main() {
+int n, m;
+std::cout « "Введите количество строк (n): ";
+std::cin » n;
+std::cout « "Введите количество столбцов (m): ";
+std::cin » m;
+
+if (!isValidInput(n) || !isValidInput(m)) {
+std::cerr « "Некорректный ввод! Количество строк и столбцов должно быть положительным числом.\n";
+return 1;
+}
+
+std::vector<std::vector<int» arr(n, std::vector<int>(m));
+int choice;
+std::cout « "Заполнить массив случайными числами (1) или с клавиатуры (2)? ";
+std::cin » choice;
+
+if (choice == 1) {
+fillArrayRandomly(arr, n, m);
+} else if (choice == 2) {
+fillArrayFromKeyboard(arr, n, m);
+} else {
+std::cerr « "Некорректный выбор!\n";
+return 1;
+}
+
+std::cout « "Исходный массив:\n";
+printArray(arr);
+
+// Задача 1
+replaceEvenElementsWithMaxAbs(arr);
+std::cout « "Массив после замены четных элементов каждого столбца максимальным по модулю:\n";
+printArray(arr);
+
+// Задача 2
+deleteColumnsWithEvenFirstElement(arr);
+std::cout « "Массив после удаления столбцов, в которых первый элемент четный:\n";
+printArray(arr);
+
+return 0;
+}
