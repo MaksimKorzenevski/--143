@@ -1,0 +1,98 @@
+void fillArrayFromKeyboard(std::vector<int>& arr, int n) {
+std::cout « "Введите " « n « " целых чисел:\n";
+for (int i = 0; i < n; ++i) {
+std::cin » arr[i];
+}
+}
+
+void fillArrayRandomly(std::vector<int>& arr, int n, int min = -10, int max = 10) {
+std::srand(std::time(0));
+for (int i = 0; i < n; ++i) {
+arr[i] = min + std::rand() % (max - min + 1);
+}
+}
+
+void replaceSecondWithMaxNegative(std::vector<int>& arr) {
+int maxNegative = std::numeric_limits<int>::min();
+for (int num : arr) {
+if (num < 0 && num > maxNegative) {
+maxNegative = num;
+}
+}
+if (maxNegative != std::numeric_limits<int>::min()) {
+arr[1] = maxNegative;
+}
+}
+
+int countPositivesNotExceedingA(const std::vector<int>& arr, int A) {
+int count = 0;
+for (int num : arr) {
+if (num > 0 && std::abs(num) <= A) {
+++count;
+}
+}
+return count;
+}
+
+int findFirstPairWithSumLessThan(const std::vector<int>& arr, int sumLimit) {
+for (size_t i = 0; i < arr.size() - 1; ++i) {
+if (arr[i] + arr[i + 1] < sumLimit) {
+return i;
+}
+}
+return -1; // Если такой пары нет
+}
+
+int main() {
+int n;
+std::cout « "Введите размер массива: ";
+std::cin » n;
+
+std::vector<int> arr(n);
+int choice;
+std::cout « "Заполнить массив случайными числами (1) или с клавиатуры (2)? ";
+std::cin » choice;
+
+if (choice == 1) {
+fillArrayRandomly(arr, n);
+} else if (choice == 2) {
+fillArrayFromKeyboard(arr, n);
+} else {
+std::cerr « "Некорректный выбор!\n";
+return 1;
+}
+
+std::cout « "Исходный массив: ";
+for (int num : arr) {
+std::cout « num « " ";
+}
+std::cout « "\n";
+
+// Задача 1
+replaceSecondWithMaxNegative(arr);
+std::cout « "Массив после замены второго элемента на максимальный среди отрицательных: ";
+for (int num : arr) {
+std::cout « num « " ";
+}
+std::cout « "\n";
+
+// Задача 2
+int A;
+std::cout « "Введите значение A: ";
+std::cin » A;
+int positiveCount = countPositivesNotExceedingA(arr, A);
+std::cout « "Количество положительных элементов, не превосходящих по модулю " « A « ": " « positiveCount « "\n";
+
+// Задача 3
+int sumLimit;
+std::cout « "Введите значение для суммы: ";
+std::cin » sumLimit;
+int firstPairIndex = findFirstPairWithSumLessThan(arr, sumLimit);
+if (firstPairIndex != -1) {
+std::cout « "Номер первой пары соседних элементов, сумма которых меньше " « sumLimit « ": " « firstPairIndex « "\n";
+} else {
+std::cout « "Пара с суммой меньшей " « sumLimit « " не найдена.\n";
+}
+
+return 0;
+}
