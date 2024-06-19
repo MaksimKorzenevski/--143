@@ -8,7 +8,6 @@ return true;
 }
 
 bool fitsInCircle(double width, double height, double radius) {
-// Проверяем, помещается ли прямоугольник в круге с центром в начале координат
 double diagonal = std::sqrt(width * width + height * height);
 return diagonal <= 2 * radius;
 }
@@ -52,7 +51,6 @@ bool fitsSecond = fitsInCircle(c, d, r);
 std::cout « "\nРезультаты проверки:\n";
 
 if (fitsFirst && fitsSecond) {
-// Вычислим необходимую площадь
 double areaRequired = (a * b) + (c * d);
 double circleArea = M_PI * r * r;
 
